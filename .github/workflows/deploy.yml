@@ -4,6 +4,11 @@ on:
   push:
     branches: [ "main" ]
 
+# 🔑 REQUIRED for OIDC
+permissions:
+  id-token: write
+  contents: read
+
 jobs:
   build:
     runs-on: ubuntu-latest
@@ -22,6 +27,17 @@ jobs:
 
     - name: Build
       run: dotnet publish -c Release -o publish
+
+    # 🔐 Assume AWS role using OIDC (NO secrets needed)
+    - name: Configure AWS credentials
+      uses: aws-actions/configure-aws-credentials@v4
+      with:
+        role-to-assume: arn:aws:iam::<ACCOUNT_ID>:role/GitHubOIDCRole
+        aws-region: us-east-1
+
+    # ✅ Verify OIDC worked
+    - name: Verify AWS identity
+      run: aws sts get-caller-identity
 
     - name: Upload artifact
       uses: actions/upload-artifact@v4
