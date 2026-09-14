@@ -8,11 +8,11 @@ permissions:
   contents: read
 
 env:
-  AWS_REGION: ap-south-1
-  ACCOUNT_ID: 010928211341
-  ECR_REPOSITORY: dotnet-8-0
-  IMAGE_TAG: ${{ github.sha }}
-
+  AWS_REGION: "ap-south-1"
+  ACCOUNT_ID: "010928211341"
+  ECR_REPOSITORY: "dotnet-8-0"
+  IMAGE_TAG: "${{ github.sha }}"
+  
 jobs:
   build:
     runs-on: ubuntu-latest
