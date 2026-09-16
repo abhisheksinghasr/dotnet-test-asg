@@ -1,14 +1,12 @@
 ﻿using Microsoft.AspNetCore.Builder;
 using Microsoft.Extensions.Hosting;
+using Microsoft.AspNetCore.Http;
 
 var builder = WebApplication.CreateBuilder(args);
 var app = builder.Build();
 
-// main endpoint
-app.MapGet("/", () => "Hello from ECS on port 8080 🚀");
+app.MapGet("/", () => "Hello from Docker.");
 
-// health check (important for ECS/ALB)
 app.MapGet("/health", () => Results.Ok("Healthy"));
 
-// force port 8080
 app.Run("http://0.0.0.0:8080");
